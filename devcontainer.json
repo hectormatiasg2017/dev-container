@@ -7,12 +7,15 @@
 
 
 	"name": "Node.js & TypeScript & PostgreSQL",
+	"runArgs": ["--env-file",".devcontainer/.devcontainer.env"],
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"postCreateCommand": "git config --global user.name \"$GIT_USER_NAME\" && git config --global user.email \"$GIT_USER_EMAIL\"",
 	"customizations": {
 		"vscode": {
 		  "extensions": [
+			"Postman.postman-for-vscode",
 			"ms-azuretools.vscode-docker"
 		  ]
 		}

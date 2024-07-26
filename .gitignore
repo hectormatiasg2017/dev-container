@@ -1,0 +1,37 @@
+# Ignore .env files containing environment variables
+.env
+*.env
+
+# Ignore node_modules if using Node.js
+node_modules/
+npm-debug.log
+
+# General binary files and temporary files
+*.exe
+*.o
+*.so
+*.dll
+*.dmg
+*.iso
+*.img
+*.pkg
+*.deb
+*.tar.gz
+*.zip
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Visual Studio Code specific ignores
+.vscode/
+*.code-workspace
+
+# DevContainer specific ignores
+.devcontainer/.env  # If you use a specific .env file for devcontainer
+.devcontainer/docker-compose.override.yml  # If you have environment-specific Docker Compose overrides
+.devcontainer/config.local.json  # Example for any local config files
+
+# Docker specific ignores
+docker-compose.override.yml  # Local overrides for Docker Compose
+Dockerfile.dev  # If you have a separate Dockerfile for development
