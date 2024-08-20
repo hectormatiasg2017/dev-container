@@ -9,6 +9,7 @@ services:
 
     volumes:
       - ../..:/workspaces:cached
+      - root:/root
       
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -22,8 +23,16 @@ services:
     networks:
       - app-network
 
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+  # php-app:
+  #   build:
+  #     context: ./php-app  # Path to your new PHP project directory
+  #     dockerfile: Dockerfile  # Dockerfile for PHP
+  #   volumes:
+  #     - ./php-app:/var/www
+  #   ports:
+  #     - "8080:80"
+  #   networks:
+  #     - app-network
 
   postgres-db:
     image: postgres:latest
@@ -66,11 +75,25 @@ services:
     command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
     networks:
       - app-network
+    environment:
+      - ENABLE_DYNAMODB
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - "6379:6379" # Expose Redis port to host
+    volumes:
+      - redis-data:/data # Persist Redis data (optional)
+    networks:
+      - app-network
 
 volumes:
   postgres-data:
   es_data:
   dynamodb_data:
+  root:
+  redis-data:
 
 networks:
   app-network:

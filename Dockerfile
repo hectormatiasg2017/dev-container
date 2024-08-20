@@ -1,12 +1,22 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
 
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+# Install Python and pip
+RUN apt-get update && apt-get install -y python3 python3-pip python3.11-venv
 
-# [Optional] Uncomment if you want to install an additional version of node using nvm
-# ARG EXTRA_NODE_VERSION=10
-# RUN su node -c "source /usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
+# Install Poetry for the current user
+RUN curl -sSL https://install.python-poetry.org | python3 -
+# Add Poetry to PATH
+ENV PATH="/root/.local/bin:$PATH"
 
-# [Optional] Uncomment if you want to install more global node modules
-# RUN su node -c "npm install -g <your-package-list-here>"
+# Install AWS CLI
+RUN apt-get update && \
+    apt-get install -y unzip && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip aws 
+
+RUN npm install -g aws-cdk
+
+# Optional: Install PHP
+# RUN apt-get update && apt-get install -y php php-cli php-mbstring
